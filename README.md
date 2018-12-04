@@ -35,12 +35,28 @@ In the docker command line environment run:
 
 ```
 c:\> cd MFIsolatedTest
-c:\MFIsolatedTest\>mfisolatedtest.exe input.mpg output.mp4
+c:\MFIsolatedTest\>mfisolatedtest.exe 
 ```
 
-Notice that it crashes
+Notice that it crashes, without displaying the usage text.
 
-### Connect the debugger
+Use WinDbg or VS debugger, following the instructions below.
+
+### Use WinDbg
+
+In the docker container environment do:
+
+```
+C:\mfisolatedtest>"c:\Program Files (x86)\Windows Kits\10\Debuggers\x86\cdb.exe" -o mfisolatedtest.exe
+```
+
+The debugger will output lots of info. Embedded somewhere will be a line like:
+
+```
+06ac:066c @ 00092281 - LdrpProcessWork - ERROR: Unable to load DLL: "ksuser.dll", Parent Module: "C:\Windows\SYSTEM32\MFCORE.DLL", Status: 0xc0000135
+```
+
+### Connect the VS debugger
 
 In the docker container environment do:
 
@@ -57,3 +73,35 @@ Remote Command Arguments: c:\test_data\h264.mp4 out.mp4
 Working Directory: c:\mfisolatedtest
 Remote Server Name: localhost:4022
 Connection: Remote with no Authentication
+
+Hit F5 to launch the debugger.
+
+You should see the debugger start, then immediately exit.
+
+Look at the Output tab and you'll see something like:
+
+```
+'mfisolatedtest.exe' (Win32): Loaded 'C:\mfisolatedtest\mfisolatedtest.exe'. Symbols loaded.
+'mfisolatedtest.exe' (Win32): Loaded '\Device\vmsmb\VSMB-{dcc079ae-60ba-4d07-847c-3493609c0870}\os\Windows\SysWOW64\ntdll.dll'. Cannot find or open the PDB file.
+06d8:0700 @ 00370515 - LdrpInitializeProcess - INFO: Beginning execution of MFIsolatedTest.exe (C:\MFIsolatedTest\MFIsolatedTest.exe)
+	Current directory: C:\Windows
+	Package directories: (null)
+
+	[SNIP]
+
+06d8:0218 @ 00371484 - LdrpResolveDllName - ENTER: DLL name: C:\Users\ContainerAdministrator\AppData\Local\Microsoft\WindowsApps\ksuser.dll
+06d8:0218 @ 00371500 - LdrpResolveDllName - RETURN: Status: 0xc0000135
+06d8:0218 @ 00371500 - LdrpSearchPath - RETURN: Status: 0xc0000135
+06d8:0218 @ 00371500 - LdrpProcessWork - ERROR: Unable to load DLL: "ksuser.dll", Parent Module: "C:\Windows\SYSTEM32\MFCORE.DLL", Status: 0xc0000135
+
+06d8:0700 @ 00371500 - LdrpInitializeProcess - ERROR: Walking the import tables of the executable and its static imports failed with status 0xc0000135
+06d8:0700 @ 00371500 - _LdrpInitialize - ERROR: Process initialization failed with status 0xc0000135
+06d8:0700 @ 00371500 - LdrpInitializationFailure - ERROR: Process initialization failed with status 0xc0000135
+The thread 0x700 has exited with code -1073741515 (0xc0000135).
+The thread 0x224 has exited with code -1073741515 (0xc0000135).
+The program '[1752] MFIsolatedTest.exe' has exited with code -1073741515 (0xc0000135) 'A dependent dll was not found'.
+```
+
+The key line is:
+
+`06d8:0218 @ 00371500 - LdrpProcessWork - ERROR: Unable to load DLL: "ksuser.dll", Parent Module: "C:\Windows\SYSTEM32\MFCORE.DLL", Status: 0xc0000135`

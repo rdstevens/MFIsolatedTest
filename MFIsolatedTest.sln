@@ -5,6 +5,13 @@ VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFIsolatedTest", "MFIsolatedTest\MFIsolatedTest.vcxproj", "{9AED7BCF-6829-4C78-873F-38D3A3CACC04}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DEEBB9C7-9DF4-42B8-B70A-018888E5923B}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		DOCKERFILE = DOCKERFILE
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

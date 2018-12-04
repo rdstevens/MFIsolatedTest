@@ -8,20 +8,20 @@ RUN ["c:/Program Files (x86)/Windows Kits/10/Debuggers/x86/gflags.exe", "-i", "m
 
 
 # x86 runtime for our test app
-#ADD https://aka.ms/vs/15/release/vc_redist.x86.exe /setup/vc_redist.x86.exe
-#RUN c:/setup/vc_redist.x86.exe /quiet /install
+ADD https://aka.ms/vs/15/release/vc_redist.x86.exe /setup/vc_redist.x86.exe
+RUN c:/setup/vc_redist.x86.exe /quiet /install
 
 # x64 runtime for vs_remotetools
-#ADD https://download.microsoft.com/download/6/D/F/6DF3FF94-F7F9-4F0B-838C-A328D1A7D0EE/vc_redist.x64.exe /setup/vc_redist.x64.exe
-#RUN C:\setup\vc_redist.x64.exe /quiet
+ADD https://download.microsoft.com/download/6/D/F/6DF3FF94-F7F9-4F0B-838C-A328D1A7D0EE/vc_redist.x64.exe /setup/vc_redist.x64.exe
+RUN C:\setup\vc_redist.x64.exe /quiet
 
 # vs_remotetools for debugging
-#ADD https://aka.ms/vs/15/release/RemoteTools.amd64ret.enu.exe /setup/VS_RemoteTools.exe
-#RUN C:\setup\VS_RemoteTools.exe /quiet
+ADD https://aka.ms/vs/15/release/RemoteTools.amd64ret.enu.exe /setup/VS_RemoteTools.exe
+RUN C:\setup\VS_RemoteTools.exe /quiet
 
 # Copy the script that installs Media Foundation Framework
-#copy *.ps1 c:/setup
-#RUN powershell.exe c:/setup/setup_media_framework.ps1
+copy *.ps1 c:/setup
+RUN powershell.exe c:/setup/setup_media_framework.ps1
 
 copy h264.mp4 c:/test_data/
 copy release/mfisolatedtest.exe c:/mfisolatedtest/
