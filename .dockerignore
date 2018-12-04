@@ -1,0 +1,4 @@
+*
+!*.ps1
+!*/Release/*.exe
+!h264.mp4

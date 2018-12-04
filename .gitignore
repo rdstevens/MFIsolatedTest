@@ -1,0 +1,7 @@
+/.vs/*
+*/Debug/*
+*/Release/*
+/MFIsolatedTest/*/Debug/*
+MFIsolatedTest/Release/*
+*.vcxproj.user
+/Release/*
