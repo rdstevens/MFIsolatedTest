@@ -1,7 +1,20 @@
 # MFIsolatedTest
+
+Problem: microsoft/windowsservercore (and Windows Server 2016 Core, Windows Server 2019 Core) cannot transcode H264 video.
+
+It is possible to install Server Media Foundation components in microsoft/windowsservercore, but the neccesary DirectX 
+components are still missing.
+
+
+This github project incorporates the Microsoft example code from here:
+
 https://docs.microsoft.com/en-us/windows/desktop/medfound/tutorial--encoding-an-mp4-file-
 
-Visual studio project incorporating the sample code copied and pasted from MS example site.
+and adds a DOCKERFILE and instructions to reproduce the problem.
+
+An additional binary tool, mftenum.exe is included to help validate that the Server Media Foundation feature has been
+succesfully installed.
+
 
 ## Build
 
