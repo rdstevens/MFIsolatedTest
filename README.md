@@ -39,6 +39,23 @@ PS C:\>
 
 ```
 
+## Validate Media Foundation
+
+In the docker command line environment run:
+
+```
+c:\> cd MFIsolatedTest
+c:\MFIsolatedTest\>mftenum.exe 
+```
+
+Observe, amongst other things:
+
+```
+-- Video encoders ({F79EAC7D-E545-4387-BDEE-D647D7BDE42A}) --
+H264 Encoder MFT ({6CA50344-051A-4DED-9779-A43305165E35})
+```
+
+
 ## Demonstrate the problem
 
 In the docker command line environment run:

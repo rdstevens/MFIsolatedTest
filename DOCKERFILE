@@ -22,7 +22,7 @@ RUN C:\setup\VS_RemoteTools.exe /quiet
 # Copy the script that installs Media Foundation Framework
 copy *.ps1 c:/setup
 RUN powershell.exe c:/setup/setup_media_framework.ps1
-
+copy mftenum.exe c:/mfisolatedtest/
 copy h264.mp4 c:/test_data/
 copy release/mfisolatedtest.exe c:/mfisolatedtest/
 
