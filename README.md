@@ -24,8 +24,18 @@ Note: the port mappings are for the Visual Studio Remote Debugger
 ## Confirm that Media Foundation is installed
 
 ```
-powershell.exe
-Get-WindowsFeature -Name *Media*
+C:\>powershell
+Windows PowerShell
+Copyright (C) 2016 Microsoft Corporation. All rights reserved.
+
+PS C:\> get-windowsfeature -Name *Media*
+
+Display Name                                            Name                       Install State
+------------                                            ----                       -------------
+[X] Media Foundation                                    Server-Media-Foundation        Installed
+
+
+PS C:\>
 
 ```
 
