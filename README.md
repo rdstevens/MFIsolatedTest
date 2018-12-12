@@ -1,9 +1,11 @@
 # MFIsolatedTest
 
-Problem: microsoft/windowsservercore (and Windows Server 2016 Core, Windows Server 2019 Core) cannot transcode H264 video.
+Problem: microsoft/windowsservercore, mcr.microsoft.com/windows/servercore:1809  (and Windows Server 2016 Core, Windows Server 2019 Core) cannot transcode H264 video.
 
 It is possible to install Server Media Foundation components in microsoft/windowsservercore, but the neccesary DirectX 
 components are still missing.
+
+It is NOT possible to install Server Media Foundation components in mcr.microsoft.com/windows/servercore:1809 - see below.
 
 
 This github project incorporates the Microsoft example code from here:
@@ -145,3 +147,52 @@ The program '[1752] MFIsolatedTest.exe' has exited with code -1073741515 (0xc000
 The key line is:
 
 `06d8:0218 @ 00371500 - LdrpProcessWork - ERROR: Unable to load DLL: "ksuser.dll", Parent Module: "C:\Windows\SYSTEM32\MFCORE.DLL", Status: 0xc0000135`
+
+## 1809 
+
+mcr.microsoft.com/windows/servercore:1809 is the latest Windows Server 2019 container version. Unfortunately we see the following:
+
+```
+C:\>powershell
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\>
+PS C:\> get-windowsfeature -Name *Media*
+
+Display Name                                            Name                       Install State
+------------                                            ----                       -------------
+[ ] Media Foundation                                    Server-Media-Foundation          Removed
+```
+
+The feature is not there!
+
+If we attempt to install it anyway:
+
+```
+PS C:\> install-windowsfeature Server-Media-Foundation
+install-windowsfeature : The request to add or remove features on the specified server failed.
+Installation of one or more roles, role services, or features failed.
+The source files could not be found.
+Use the "Source" option to specify the location of the files that are required to restore the feature. For more information on specifying a source location, see
+http://go.microsoft.com/fwlink/?LinkId=243077. Error: 0x800f081f
+At line:1 char:1
++ install-windowsfeature Server-Media-Foundation
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (@{Vhd=; Credent...Name=localhost}:PSObject) [Install-WindowsFeature], Exception
+    + FullyQualifiedErrorId : DISMAPI_Error__Failed_To_Enable_Updates,Microsoft.Windows.ServerManager.Commands.AddWindowsFeatureCommand
+
+Success Restart Needed Exit Code      Feature Result
+------- -------------- ---------      --------------
+False   No             Failed         {}
+
+
+PS C:\>
+```
+
+The source for the feature cannot be found.
+```
+```
